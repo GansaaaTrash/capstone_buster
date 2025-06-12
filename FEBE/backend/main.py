@@ -117,9 +117,18 @@ def check_hoax_guest(input: TextInput):
 # Include API router with prefix /api
 app.include_router(api_router, prefix="/api")
 
-# Mount the entire dist folder as static files at root
+# Mount the entire dist folder as static files at /static
+from fastapi.responses import FileResponse
+from fastapi.requests import Request
+
 frontend_dist_path = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), "Frontend", "dist")
-app.mount("/", StaticFiles(directory=frontend_dist_path, html=True), name="frontend")
+app.mount("/static", StaticFiles(directory=frontend_dist_path), name="static")
+
+# Catch-all route to serve index.html for frontend routes
+@app.get("/{full_path:path}")
+async def serve_frontend(full_path: str, request: Request):
+    index_path = os.path.join(frontend_dist_path, "index.html")
+    return FileResponse(index_path)
 
 if __name__ == "__main__":
     import uvicorn
