@@ -4,7 +4,7 @@ nixPkgs = ['nodejs', 'python39']
 [phases.install]
 cmds = [
     'cd FEBE/Frontend && npm install',
-    'cd FEBE/backend && pip install -r requirements.txt'
+    'cd FEBE/backend && python3 -m pip install -r requirements.txt'
 ]
 
 [phases.build]
