@@ -1,11 +1,10 @@
 [phases.setup]
-nixPkgs = ['nodejs', 'python39', 'python39Packages.pip']
+nixPkgs = ['nodejs', 'python39']
 
 [phases.install]
 cmds = [
     'cd FEBE/Frontend && npm install',
-    'python3 -m ensurepip --upgrade',
-    'cd FEBE/backend && python3 -m pip install --upgrade pip && python3 -m pip install -r requirements.txt'
+    'cd FEBE/backend && python3 -m venv venv && . venv/bin/activate && python3 -m pip install -r requirements.txt'
 ]
 
 [phases.build]
