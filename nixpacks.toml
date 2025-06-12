@@ -1,17 +1,21 @@
 [phases.setup]
-nixPkgs = ['nodejs', 'python39', 'python39Packages.pip']
+# Switch to python39Full which already includes pip, setuptools & wheel
+nixPkgs = [
+    "nodejs",
+    "python39Full"
+]
 
 [phases.install]
 cmds = [
-    'cd FEBE/Frontend && npm install',
-    'cd FEBE/backend && python3 -m venv venv && . venv/bin/activate && python3 -m pip install --upgrade pip && python3 -m pip install -r requirements.txt'
+    "cd FEBE/Frontend && npm install",
+    "cd FEBE/backend && python3 -m venv venv && . venv/bin/activate && python3 -m pip install --upgrade pip && python3 -m pip install -r requirements.txt"
 ]
 
 [phases.build]
 cmds = [
-    'cd FEBE/Frontend && npm run build',
-    'cp -r FEBE/Frontend/dist FEBE/backend/'
+    "cd FEBE/Frontend && npm run build",
+    "cp -r FEBE/Frontend/dist FEBE/backend/"
 ]
 
 [start]
-cmd = 'cd FEBE/backend && . venv/bin/activate && python3 -m uvicorn main:app --host 0.0.0.0 --port $PORT'
+cmd = "cd FEBE/backend && . venv/bin/activate && python3 -m uvicorn main:app --host 0.0.0.0 --port $PORT"
