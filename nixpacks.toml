@@ -8,7 +8,7 @@ nixPkgs = [
 [phases.install]
 cmds = [
     "cd FEBE/Frontend && npm install",
-    "cd FEBE/backend && curl https://bootstrap.pypa.io/get-pip.py -o get-pip.py && python3 get-pip.py && python3 -m venv venv && . venv/bin/activate && python3 -m pip install --upgrade pip && python3 -m pip install -r requirements.txt"
+    "cd FEBE/backend && pip install --upgrade pip && pip install -r requirements.txt"
 ]
 
 [phases.build]
@@ -18,4 +18,4 @@ cmds = [
 ]
 
 [start]
-cmd = "cd FEBE/backend && . venv/bin/activate && python3 -m uvicorn main:app --host 0.0.0.0 --port $PORT"
+cmd = "cd FEBE/backend && python3 -m uvicorn main:app --host 0.0.0.0 --port $PORT"
